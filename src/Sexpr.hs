@@ -9,7 +9,7 @@ import Prelude hiding (id, (.))
 data Sexpr
   = SList [Sexpr]
   | SSymbol String
-  deriving Show
+  -- deriving Show
 
 instance Show Sexpr where
   -- sexpr should be total
@@ -37,6 +37,9 @@ sSymbolL =
 
 sexpr :: PP Sexpr
 sexpr = list <> symbol
+
+sexprs :: PP [Sexpr]
+sexprs = fixed "" whitespace . many (sexpr . fixed "\n" whitespace)
 
 list :: PP Sexpr
 list = sListL . lit "(" . fixed "" whitespace . (nonEmptySexprs <> nil) . lit ")"
